@@ -93,5 +93,38 @@ plot(l2011$B2_sre, col=clg)
 plot(l2011$B3_sre, col=clr)
 plot(l2011$B4_sre, col=clnir)
 
+# Day 3
 
+# plot di NIR
+plot(l2011$B4_sre)
+# oppure
+# plot(l2011[[4]])
+
+clnir <- colorRampPalette(c("red", "orange", "yellow")) (100)
+plot(l2011$B4_sre, col=clnir)
+
+# plot RGB layers -> associare le bande al rosso, verde, blu
+plotRGB(l2011, r=3, g=2, b=1, stretch="lin")
+# infrarosso che vegetazione riflette molto
+plotRGB(l2011, r=4, g=3, b=2, stretch="lin")
+# vedere la vegetazione in verde
+plotRGB(l2011, r=3, g=4, b=2, stretch="lin")
+# in giallo il suolo nudo
+plotRGB(l2011, r=3, g=2, b=4, stretch="lin")
+
+# con stretch hist
+plotRGB(l2011, r=3, g=4, b=2, stretch="hist")
+
+# multiframe con visibile RGB (linear stretch) su colori falsi (histogram stretch)
+par(mfrow=c(2, 1))
+plotRGB(l2011, r=3, g=2, b=1, stretch="lin")
+plotRGB(l2011, r=3, g=4, b=2, stretch="hist")
+
+# upload the image from 1988
+l1988 <- brick("p224r63_1988.grd")
+l1988
+
+par(mfrow=c(2,1))
+plotRGB(l1988, r=4, g=3, b=2, stretch="lin")
+plotRGB(l2011, r=4, g=3, b=2, stretch="lin")
 
