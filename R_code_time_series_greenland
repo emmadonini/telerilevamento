@@ -1,0 +1,56 @@
+# Time series analysis of Greenland LST data
+
+library(raster)
+
+setwd("/Users/emma/Desktop/lab/greenland")
+
+# funzione raster importa uno ad uno ogni elemento
+lst2000 <- raster("lst_2000.tif")
+lst2000
+plot(lst2000)
+
+lst2005 <- raster("lst_2005.tif")
+lst2010 <- raster("lst_2010.tif")
+lst2015 <- raster("lst_2015.tif")
+
+cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
+
+par(mfrow= c(2,2))
+plot(lst2000, col=cl)
+plot(lst2005, col=cl)
+plot(lst2010, col=cl)
+plot(lst2015, col=cl)
+
+# importare tanti dati assieme
+# list.files crea una lista di file. Pattern serve per spiegare la caratteristica comune a tutti i file
+rlist <- list.files(pattern="lst")
+rlist
+import <- lapply(rlist, raster)
+import
+
+# stack mettere assieme i dati
+tgr <- stack(import)
+tgr
+
+plot(tgr, col=cl)
+
+# per plottare solo un elemento dello stack
+plot(tgr$lst_2000, col=cl)
+# oppure
+# plot(tgr[[1]], col=cl)
+
+# per vedere più bande/elementi assieme, li sovrappone
+plotRGB(tgr, r=1, g=2, b=3, stretch="lin")
+
+# colorist è un pacchetto
+
+
+
+
+
+
+
+
+
+
+
