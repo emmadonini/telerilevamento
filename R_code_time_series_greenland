@@ -44,10 +44,18 @@ plotRGB(tgr, r=1, g=2, b=3, stretch="lin")
 
 # colorist è un pacchetto
 
+plotRGB(tgr, 1, 2, 3, stretch="Lin") 
+plotRGB(tgr, 2, 3, 4, stretch="Lin") 
+plotRGB(tgr, 4, 3, 2, stretch="Lin") 
 
+# levelplot(tgr)
+cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
+plot(tgr, col=cl)
 
-
-
+# levelplot(TGr,col.regions=cl, names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
+# 
+# levelplot(TGr,col.regions=cl, main="LST variation in time",
+#           names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
 
 
 
