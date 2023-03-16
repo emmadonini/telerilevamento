@@ -1,5 +1,5 @@
 library(raster)
-library(RStoolbox)
+library(RStoolbox) # for image viewing and variability
 library(ggplot2)
 library(patchwork)
 # install.packages("viridis")
@@ -7,6 +7,7 @@ library(viridis)
 
 setwd("/Users/emma/Desktop/lab/")
 
+# import
 sen <- brick("sentinel.png")
 sen
 
@@ -47,4 +48,11 @@ geom_raster(sd3, mapping=aes(x=x, y=y, fill=layer)) +
 scale_fill_viridis(option="cividis") +
 ggtitle("Standard deviation by viridis package")
 
+# esempio con magma
+ggplot() + 
+geom_raster(sd3, mapping=aes(x=x, y=y, fill=layer)) +
+scale_fill_viridis(option="magma") +
+ggtitle("Standard deviation by viridis package")
 
+# calculation with a 7x7 window
+sd7 <- focal(nir, matrix(1/49, 7, 7), fun=sd)
