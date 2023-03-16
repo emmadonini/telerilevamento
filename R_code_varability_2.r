@@ -16,7 +16,7 @@ ggRGB(siml, 1, 2, 3)
 ggRGB(siml, 3, 1, 2)
 
 simlpca <- rasterPCA(siml)
-simpca
+simlpca
 
 # $call
 # $model
