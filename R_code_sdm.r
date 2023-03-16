@@ -18,7 +18,7 @@ plot(species, pch=19)
 species$Occurrence
 
 # [] per fare un subste, una selezione
-plot(species[specie$Occurrence == 1,]
+plot(species[species$Occurrence == 1,])
 
 occ <- species$Occurrence
 
