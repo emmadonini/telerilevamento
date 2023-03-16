@@ -13,7 +13,7 @@ dsm_2013 <- raster("2013Elevation_DigitalElevationModel-0.5m.tif")
 
 dtm_2013 <- raster("2013Elevation_DigitalTerrainModel-0.5m.tif")
 
-plot(dtm_2014)
+plot(dtm_2013)
 
 # calcolare CHM
 chm_2013 <- dsm_2013-dtm_2013
