@@ -143,11 +143,7 @@ plotRGB(imm22, 3, 2, 1, stretch="lin")
 grup_nir <- stack(imm20[[4]], imm21[[4]], imm22[[4]])
 plot(grup_nir, col=cl)
 
-# da immagine più vecchia a  più recente
 plotRGB(grup_nir, 1, 2, 3, stretch="lin") 
-
-# visione dall'immagine più recente a più vecchia 
-# plotRGB(grup_nir, 3, 2, 1, stretch="lin") 
 
 
 # Classificazione
@@ -205,23 +201,6 @@ perc21_for <- 8297225 * 100 / tot21
 # foresta: 54.54%
 
 
-##### Dataframe 
-#### non sò se farlo o se è troppo uguale a quello fatto a lezione
-## Valutare se ha senso metterlo
-#classi_20 <- c("Zone terrose", "Foresta e acqua", "Neve e nuvole")
-#perc20 <- c(36.33, 62.94, 0.72)
-#classi_21 <- c("Zone bruciate e acqua", "Zone terrose", "Foresta")
-#perc21 <- c(17.44, 28.01, 54.54)
-
-#df_20 <- data.frame(nomclass20, perc20)
-#df_21 <- data.frame(nomclass21, perc21)
-
-#ggplot(df_20, aes(x=nomclass20, y=perc20, color=classi_20)) +
-#  geom_bar(stat="identity", fill="white")
-#ggplot(df_21, aes(x=nomclass21, y=perc21, color=classi_21)) +
-#  geom_bar(stat="identity", fill="white")
-
-
 # Analisi delle componenti principali
 # prima ricampionare per facilitare la pca
 ### farlo PER LE DUE immagini o solo per una????
@@ -271,21 +250,6 @@ ggplot() +
 # Plottare le prime tre componenti principali con plotRGB
 plotRGB(pca_ric21$map, 1, 2, 3, stretch="lin")
 
-# Confrontare le immagini del 2020 e 2021
-#### voglio fare il confronto???? ### nel caso inverto l'ordine (prima 2020, poi 2022)???
-ric20 <- aggregate(imm20, fact=10)
-pca_ric20 <- rasterPCA(ric20)
-
-plot(pca_ric20$map, col=cl)
-summary(pca_ric20$model)
-# PC1 rappresenta l'82,5% della varianza, mentre le prime due componenti il 98,9%
-
-#par(mfrow=c(1,2))
-plotRGB(pca_ric20$map, 1, 2, 3, stretch="lin")
-#plotRGB(pca_ric21$map, 1, 2, 3, stretch="lin")
-### a senso farlo???
-### a senso fare il confronto oppure posso metterlo solo per vedere pca 
-# anche dell'altra immagine??
 
 
 
