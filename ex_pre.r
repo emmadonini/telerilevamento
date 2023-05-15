@@ -50,16 +50,8 @@ ggRGB(imm21o, 3, 2, 1)
 ggRGB(imm22o, 3, 2, 1)
 
 
-
-# plot per verificare il risultato 
-par(mfrow=c(1,3))
-plotRGB(imm20, 3, 2, 1, stretch="lin")
-plotRGB(imm21, 3, 2, 1, stretch="lin")
-plotRGB(imm22, 3, 2, 1, stretch="lin")
-#### non sò perchè ma appaiono con colori diversi -> e imm20 è un pò brulla !!!
-
 # Plot bande -> ??????
-clp <- colorRampPalette(c('red','orange','yellow'))(100)
+clp <- colorRampPalette(c("blacK", "red","orange","yellow"))(100)
 plot(imm20, col=clp)
 
 # Visualizzare nir e confrontare visivamente le immagini
@@ -67,16 +59,18 @@ par(mfrow=c(1,3))
 plotRGB(imm20, 4, 3, 2, stretch="lin")
 plotRGB(imm21, 4, 3, 2, stretch="lin")
 plotRGB(imm22, 4, 3, 2, stretch="lin")
+### risistemare che questo è imm originali
 
 # vedere nir come verde per definire meglio la vegetazione
 plotRGB(imm20, 3, 4, 2, stretch="lin")
 plotRGB(imm21, 3, 4, 2, stretch="lin")
 plotRGB(imm22, 3, 4, 2, stretch="lin")
+def.off()
 
-# stretch="hist" per definire meglio zone incendiate 
-plotRGB(imm20, 3, 4, 2, stretch="hist")
-plotRGB(imm21, 3, 4, 2, stretch="hist")
-plotRGB(imm22, 3, 4, 2, stretch="hist")
+# confronto con stretch="hist" 
+par(mfrow=c(1,2))
+plotRGB(imm21, 4, 3, 2, stretch="lin")
+plotRGB(imm21, 4, 3, 2, stretch="hist")
 dev.off()
 
 
@@ -92,18 +86,12 @@ plot(dvi21, col=cl)
 
 # DVI differenza tra 2020 e 2021 (prima e dopo gli incendi)
 dvi_dif = dvi20 - dvi21
-cld <- colorRampPalette(c('green','white','red'))(100) # non è colorblind friendly
+cld <- colorRampPalette(c('green','white','red'))(100) 
 plot(dvi_dif, col=cld)
 
 # NDVI
 ndvi20 =  dvi20 / (imm20[[4]] + imm20[[3]])
 plot(ndvi20, col=cl)
-
-# multiframe
-par(mfrow=c(2, 1))
-plotRGB(imm20, r=4, g=3, b=2, stretch="lin")
-plot(ndvi20, col=cl)
-#### decidere se inserire
 
 ndvi21 =  dvi21 / (imm21[[4]] + imm21[[3]])
 
@@ -112,27 +100,27 @@ par(mfrow=c(2, 1))
 plot(ndvi20, col=cl)
 plot(ndvi21, col=cl)
 
-dvi22 = imm22[[4]] - imm22[[3]]
-plot(dvi22, col=cl)
+# DVI e NDVI 2022 #### decidere se inserirlo
+#dvi22 = imm22[[4]] - imm22[[3]]
+#plot(dvi22, col=cl)
 
-# NDVI 22
-ndvi22 =  dvi22 / (imm22[[4]] + imm22[[3]])
-plot(ndvi22, col=cl)
+#ndvi22 =  dvi22 / (imm22[[4]] + imm22[[3]])
+#plot(ndvi22, col=cl)
 
 # multiframe con NDVI dei 3 anni
-par(mfrow=c(1, 3))
-plot(ndvi20, col=cl)
-plot(ndvi21, col=cl)
-plot(ndvi22, col=cl)
+#par(mfrow=c(1, 3))
+#plot(ndvi20, col=cl)
+#plot(ndvi21, col=cl)
+#plot(ndvi22, col=cl)
 
 # differenza nel tempo
-dvi_dif_20_22 = dvi20 - dvi22
-plot(dvi_dif_20_22, col=cld)
+#dvi_dif_20_22 = dvi20 - dvi22
+#plot(dvi_dif_20_22, col=cld)
 
-par(mfrow=c(1,3))
-plot(div_dif, col=cld)
-plot(div_dif_21_22, col=cld)
-plot(div_dif_20_22, col=cld)
+#par(mfrow=c(1,3))
+#plot(div_dif, col=cld)
+#plot(div_dif_21_22, col=cld)
+#plot(div_dif_20_22, col=cld)
 
 
 # Focalizzarsi sugli incendi presenti
@@ -143,6 +131,12 @@ crs(ext) <- "+proj=utm +zone=10 +datum=WGS84 +units=m +no_defs"
 imm20 <- crop(imm20o, ext)
 imm21 <- crop(imm21o, ext)
 imm22 <- crop(imm22o, ext)
+
+# plot per verificare il risultato 
+par(mfrow=c(1,3))
+plotRGB(imm20, 3, 2, 1, stretch="lin")
+plotRGB(imm21, 3, 2, 1, stretch="lin")
+plotRGB(imm22, 3, 2, 1, stretch="lin")
 
 
 # Time series con le bande nir delle immagini
