@@ -162,7 +162,7 @@ n_imm20 <- projectRaster(imm20, imm21)
 n_imm22 <- projectRaster(imm22, imm21)
 
 # Creazione dello stack con le bande nir delle tre immagini
-grup_nir <- stack(imm20[[4]], imm21[[4]], imm22[[4]])
+grup_nir <- stack(n_imm20[[4]], n_imm21[[4]], n_imm22[[4]])
 
 ggRGB(grup_nir, 1, 2, 3, stretch="lin") + title(main="Nir time series")
 #### non sò se posso farlo con solo banda nir
