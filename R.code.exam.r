@@ -123,7 +123,7 @@ plot(dvi22, col=cl) + title(main="DVI 2022")
 
 # DVI differenza tra 2020 e 2021 (prima e dopo gli incendi)
 dvi_dif = dvi20 - dvi21
-cld <- colorRampPalette(c('green','white','red'))(100) 
+cld <- colorRampPalette(c('blue','white','red'))(100) 
 plot(dvi_dif, col=cld) + title(main="Differenza DVI 2020 - 2021")
 
 # DVI differenza nel tempo 
