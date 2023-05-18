@@ -155,11 +155,16 @@ plot(ndvi21, col=cl) + title(main="NDVI 2021")
 plot(ndvi22, col=cl) + title(main="NDVI 2022")
 
 
-# Time series con le bande nir delle immagini
-grup_nir <- stack(imm20[[4]], imm21[[4]], imm22[[4]])
-plot(grup_nir, col=cl)
+#### Time series con le bande nir delle immagini
 
-ggRGB(grup_nir, 1, 2, 3, stretch="lin") + title
+# Applicare le stesse extent affinchè sia possibile creare lo stack
+n_imm20 <- projectRaster(imm20, imm21)
+n_imm22 <- projectRaster(imm22, imm21)
+
+# Creazione dello stack con le bande nir delle tre immagini
+grup_nir <- stack(imm20[[4]], imm21[[4]], imm22[[4]])
+
+ggRGB(grup_nir, 1, 2, 3, stretch="lin") + title(main="Nir time series")
 #### non sò se posso farlo con solo banda nir
 #### volendo provare con ndvi  ### vedere quale anno ha valori maggiori
 # n_ndvi20 <- projectRaster(ndvi20, ndvi21)
