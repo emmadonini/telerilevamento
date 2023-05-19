@@ -164,13 +164,13 @@ n_imm22 <- projectRaster(imm22, imm21)
 # Creazione dello stack con le bande nir delle tre immagini
 grup_nir <- stack(n_imm20[[4]], imm21[[4]], n_imm22[[4]])
 
-ggRGB(grup_nir, 1, 2, 3, stretch="lin") + title(main="Nir time series")
+ggRGB(grup_nir, 1, 2, 3, stretch="lin") + ggtitle("Nir time series")
 #### non sò se posso farlo con solo banda nir
 #### volendo provare con ndvi  ### vedere quale anno ha valori maggiori
 # n_ndvi20 <- projectRaster(ndvi20, ndvi21)
 # n_ndvi22 <- projectRaster(ndvi22, ndvi21)
 # group_ndvi <- stack(n_ndvi20, ndvi21, n_ndvi22)
-# ggRGB(group_ndvi, 1, 2, 3, stretch="lin") 
+# ggRGB(group_ndvi, 1, 2, 3, stretch="lin") + ggtitle("NDVI time series")
 #### si potrebbe mettere con immagini intere
 ### oppure lo metto sul codice ma non sulla presentazione
 #######################
