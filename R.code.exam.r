@@ -177,7 +177,8 @@ si potrebbe mettere con immagini intere
 
 # Scelgo d'ora in poi di usare le solo due immagini. Escludo l'immagine del 2022 vista la situazione simile al 2021
 
-#### LAND COVER: Classificazione
+#### LAND COVER 
+## Classificazione
 
 ###### set.seed(100)
 
