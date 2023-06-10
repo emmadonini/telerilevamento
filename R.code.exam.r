@@ -155,32 +155,33 @@ plot(ndvi21, col=cl) + title(main="NDVI 2021")
 plot(ndvi22, col=cl) + title(main="NDVI 2022")
 
 
-#### Time series con le bande nir delle immagini
+#### Time series con NDVI delle immagini
 
 # Applicare le stesse extent affinchè sia possibile creare lo stack
-n_imm20 <- projectRaster(imm20, imm21)
-n_imm22 <- projectRaster(imm22, imm21)
-
-# Creazione dello stack con le bande nir delle tre immagini
-grup_nir <- stack(n_imm20[[4]], imm21[[4]], n_imm22[[4]])
-
-ggRGB(grup_nir, 1, 2, 3, stretch="lin") + ggtitle("Nir time series")
-#### non sò se posso farlo con solo banda nir oppure solo con ndvi
-# Con ndvi, stesso procedimento di prima  ### vedere quale anno ha valori maggiori
 n_ndvi20 <- projectRaster(ndvi20, ndvi21)
 n_ndvi22 <- projectRaster(ndvi22, ndvi21)
+
+# Creazione dello stack con NDVI delle tre immagini
 group_ndvi <- stack(n_ndvi20, ndvi21, n_ndvi22)
+
+# Plottare: NDVI 2020 montato sul rosso, NDVI 2021 sul verde, NDVI 2022 sul blu
 ggRGB(group_ndvi, 1, 2, 3, stretch="lin") + ggtitle("NDVI time series")
-si potrebbe mettere con immagini intere
-#### oppure lo metto sul codice ma non sulla presentazione
-#######################
+# le zone incendiate appaiono in rosso in quanto hanno valori di NDVI maggiore nel 2020
+
+# Con nir stesso procedimento di prima  
+n_imm20 <- projectRaster(imm20, imm21)
+n_imm22 <- projectRaster(imm22, imm21)
+grup_nir <- stack(n_imm20[[4]], imm21[[4]], n_imm22[[4]])
+ggRGB(grup_nir, 1, 2, 3, stretch="lin") + ggtitle("Nir time series")
+######### decidere se lo metto sul codice oppure lo tolgo completamente
+
 
 # Scelgo d'ora in poi di usare le solo due immagini. Escludo l'immagine del 2022 vista la situazione simile al 2021
 
 #### LAND COVER 
 ## Classificazione
 
-###### set.seed(100)
+# set.seed(100)
 
 ## Classificare con quattro classi le immagini del 2020 e 2021
 clas20 <- unsuperClass(imm20, nClasses=4)
