@@ -61,11 +61,11 @@ imm22
 #### VISUALIZZARE LE IMMAGINI
 
 # Plot bande 
-clp <- colorRampPalette(c("blacK", "red","orange","yellow"))(100)
-plot(imm20, col=clp) 
-plot(imm21, col=clp) 
-plot(imm22, col=clp) 
-# Solo per vederle, ma non inserisco nella presentazione
+#clp <- colorRampPalette(c("blacK", "red","orange","yellow"))(100)
+#plot(imm20, col=clp) 
+#plot(imm21, col=clp) 
+#plot(imm22, col=clp) 
+# Visualizzarle, ma non inserisco nella presentazione
 
 # Visualizzare le immagini 
 # Montare le bande per vedere l'immagine naturale: B4 sul rosso, B3 sul verde e B2 sul blu
