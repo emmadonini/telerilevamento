@@ -1,9 +1,9 @@
-####### Titolo del progetto e della presentazione
+####### Analisi di incendi in British Columbia
 
 #### ARGOMENTO 
-# Interesse sui molteplici incendi avvenuti in British Columbia (Canada) nell'estate del 2021 tra fine Giugno e metà Agosto, sintomi anche dei cambiamenti climatici.
+# Interesse sui molteplici incendi avvenuti in British Columbia (Canada) nell'estate del 2021 tra fine Giugno e metà Agosto, segni anche dei cambiamenti climatici.
 # Il progetto prende in esame un'area tra il distretto regionale di Thompson-Nicola e il distretto regionale di Cariboo.
-# L'area analizzata comprende diversi incendi tra cui lo Sparks Lake Fire che è stato il più grande incendio per area bruciata in British Columbia in quei mesi. 
+# L'area analizzata comprende diversi incendi tra cui quello dello Sparks Lake che è stato il più grande incendio per area bruciata in British Columbia in quei mesi. 
 # Links utilizzati per l'identificazione degli incendi:
 # https://cwfis.cfs.nrcan.gc.ca/interactive-map
 # https://en.wikipedia.org/wiki/2021_British_Columbia_wildfires
@@ -26,9 +26,9 @@ setwd("/Users/emma/Desktop/progetto_telerilevamento")
 
 #### IMPORTARE
 
-# Importate le 3 immagini che saranno utilizzate.
+# Importate le 3 immagini che saranno utilizzate, scaricando 4 bande ciascuna: blu, verde, rosso, nir.
 # Avendo scaricato le singole bande, usare la funzione list.files per creare la lista dei file da importare per ogni immagine.
-# Usare la funzione lapply per importare i componenti della lista.
+# Usare la funzione lapply per importare i componenti della lista, tramite la funzione raster.
 # Creare uno stack che contenga tutte le bande di un'immagine.
 
 # Immagine del 10/05/2020: un anno prima degli incendi
@@ -82,13 +82,6 @@ p2 <- ggRGB(imm21, r=4, g=3, b=2, stretch="lin") + ggtitle("Immagine del 2021")
 p3 <- ggRGB(imm22, r=4, g=3, b=2, stretch="lin") + ggtitle("Immagine del 2022")
 p1 + p2 + p3
 
-# vedere nir come verde per definire meglio la vegetazione
-#par(mfrow=c(1,3))
-#plotRGB(imm20, 3, 4, 2, stretch="lin")
-#plotRGB(imm21, 3, 4, 2, stretch="lin")
-#plotRGB(imm22, 3, 4, 2, stretch="lin")
-# Non inserisco nella presentazione
-
 # confronto con stretch="hist" 
 #par(mfrow=c(1,2))
 #plotRGB(imm21, 4, 3, 2, stretch="lin")
@@ -111,10 +104,10 @@ dvi22 = imm22[[4]] - imm22[[3]]
 dvi22
 
 # Multiframe con i DVI per le tre immagini
-# creare prima la palette
+# creare la palette di colori da usare nei plot
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) 
 
-# plottare 
+# multiframe 
 par(mfrow=c(1,3))
 plot(dvi20, col=cl) + title(main="DVI 2020")
 plot(dvi21, col=cl) + title(main="DVI 2021")
@@ -123,7 +116,11 @@ plot(dvi22, col=cl) + title(main="DVI 2022")
 
 # DVI differenza tra 2020 e 2021 (prima e dopo gli incendi)
 dvi_dif = dvi20 - dvi21
+
+# creazione palette
 cld <- colorRampPalette(c('blue','white','red'))(100) 
+
+# plot della differenza di DVI
 plot(dvi_dif, col=cld) + title(main="Differenza DVI 2020 - 2021")
 
 # DVI differenza nel tempo 
@@ -134,9 +131,10 @@ par(mfrow=c(1,3))
 plot(dvi_dif, col=cld)
 plot(dvi_dif_21_22, col=cld)
 plot(dvi_dif_20_22, col=cld)
-# Differenza DVI tra 2021 e 2022 situazione abbastanza costante,con alcuni punti che sembrano indicare miglioramento nelle zone bruciate.
+# Differenza DVI tra 2021 e 2022 situazione abbastanza costante.
 # Differenza DVI tra 2020 e 2022 simile alla situazione di comparazione tra 2020 e 2021
 # Non inserisco nella presentazione
+
 
 ## NDVI: (banda nir - banda rosso) / ( banda nir + banda rosso)
 ndvi20 =  dvi20 / (imm20[[4]] + imm20[[3]])
@@ -156,32 +154,24 @@ plot(ndvi22, col=cl) + title(main="NDVI 2022")
 
 
 #### Time series con NDVI delle immagini
+# Provare a visualizzare NDVI dei tre anni diversi nella stessa immagine con la funzione ggRGB.
 
-# Applicare le stesse extent affinchè sia possibile creare lo stack
+# Applicare le stesse extent alle immagini affinchè sia possibile creare lo stack
 n_ndvi20 <- projectRaster(ndvi20, ndvi21)
 n_ndvi22 <- projectRaster(ndvi22, ndvi21)
 
 # Creazione dello stack con NDVI delle tre immagini
 group_ndvi <- stack(n_ndvi20, ndvi21, n_ndvi22)
 
-# Plottare: NDVI 2020 montato sul rosso, NDVI 2021 sul verde, NDVI 2022 sul blu
+# Plot: NDVI 2020 montato sul rosso, NDVI 2021 sul verde, NDVI 2022 sul blu
 ggRGB(group_ndvi, 1, 2, 3, stretch="lin") + ggtitle("NDVI time series")
-# le zone incendiate appaiono in rosso in quanto hanno valori di NDVI maggiore nel 2020
-
-# Con nir stesso procedimento di prima  
-n_imm20 <- projectRaster(imm20, imm21)
-n_imm22 <- projectRaster(imm22, imm21)
-grup_nir <- stack(n_imm20[[4]], imm21[[4]], n_imm22[[4]])
-ggRGB(grup_nir, 1, 2, 3, stretch="lin") + ggtitle("Nir time series")
-######### decidere se lo metto sul codice oppure lo tolgo completamente
+# le zone bruciate appaiono in rosso in quanto hanno valori di NDVI maggiore nel 2020.
 
 
-# Scelgo d'ora in poi di usare le solo due immagini. Escludo l'immagine del 2022 vista la situazione simile al 2021
+# Scelgo d'ora in poi di usare solo le due immagini del 2020 e del 2021. Escludo l'immagine del 2022 vista la situazione simile al 2021.
 
 #### LAND COVER 
 ## Classificazione
-
-# set.seed(100)
 
 ## Classificare con quattro classi le immagini del 2020 e 2021
 clas20 <- unsuperClass(imm20, nClasses=4)
@@ -200,7 +190,7 @@ plot(clas21$map, col=clc) + title(main="Copertura del suolo 2021")
 ## Calcolare le frequenze per ogni immagine
 freq(clas20$map)
 freq(clas21$map)
-# Sono presenti NA, che in seguito saranno ignorati nel calcolo delle frequenze
+# Sono presenti NA, che in seguito saranno ignorati nel calcolo delle frequenze.
 
 # Immagine del 2020, pre-incendi
 # classe 1: foresta e acqua con 28436378 pixels
@@ -274,13 +264,13 @@ is1 + is2
 
 #### ANALISI DELLE COMPONENTI PRINCIPALI
 
-# Per facilitare la pca ricampionare le immagini così da renderle più leggere e facilmente elaborabili
+# Per eseguire la pca, ricampionare le immagini così da renderle più leggere e facilmente elaborabili.
 
 ## Ricampionamento delle immagini del 2020 e 2021
 ric20 <- aggregate(imm20, fact=10)
 ric21 <- aggregate(imm21, fact=10)
 
-# Plottare un'immagine ricampionata e confrontarla con l'immagine originale
+# Plot di un'immagine ricampionata e confrontarla con l'immagine originale
 # par(mfrow=c(1,2))
 # plotRGB(imm21, 4, 3, 2, stretch="lin")
 # plotRGB(ric21, 4, 3, 2, stretch="lin")
@@ -291,15 +281,15 @@ pca_ric20
 pca_ric21 <- rasterPCA(ric21)
 pca_ric21
 
-# Plottare le componenti principali
+# Plot delle componenti principali
 plot(pca_ric20$map, col=cl) 
 plot(pca_ric21$map, col=cl)
 
-# Visualizzare con la variabilità delle componenti principali
+# Visualizzare la variabilità delle componenti principali
 summary(pca_ric20$model)
 summary(pca_ric21$model)
-# In entrambi i casi l'insieme delle prime due componenti (Cumulative Proportion), rappresentano più del 99% della variabilità
-# La PC1 dell'immagine del 2020 spiega il 97,2% della variabilità, la PC1 dell'immagine del 2021 invece l'84,1%
+# In entrambi i casi l'insieme delle prime due componenti (Cumulative Proportion), rappresentano più del 99% della variabilità.
+# La PC1 dell'immagine del 2020 spiega il 97,2% della variabilità, la PC1 dell'immagine del 2021 invece l'84,1%.
 
 # Plottare le prime due componenti per l'immagine del 2020
 # uso di viridis 
@@ -326,7 +316,7 @@ gr2 <- ggplot() +
 gr1+gr2
 
 
-# VARIABILITA' # Non inserire nella presentazione, non molto significativo
+# VARIABILITA' # Non inserire nella presentazione, non significativo
 
 # Calcolare la deviazione standard per la PC1 delle immagini
 # usare una matrice 3 x 3
@@ -345,11 +335,6 @@ ps2 <- ggplot() +
 
 ps1 + ps2
 
-
-# Plottare le prime tre componenti principali con plotRGB
-#plotRGB(pca_ric20$map, 1, 2, 3, stretch="lin")
-#plotRGB(pca_ric21$map, 1, 2, 3, stretch="lin")
-##### molto bello ma non sò a che serve quindi potrei non metterlo manco nel codice
 
 
 
