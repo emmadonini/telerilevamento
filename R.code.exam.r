@@ -132,7 +132,7 @@ plot(dvi_dif, col=cld)
 plot(dvi_dif_21_22, col=cld)
 plot(dvi_dif_20_22, col=cld)
 # Differenza DVI tra 2021 e 2022 situazione abbastanza costante.
-# Differenza DVI tra 2020 e 2022 simile alla situazione di comparazione tra 2020 e 2021
+# Differenza DVI tra 2020 e 2022 simile alla situazione di comparazione tra 2020 e 2021.
 # Non inserisco nella presentazione
 
 
